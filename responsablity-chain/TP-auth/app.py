@@ -1,8 +1,7 @@
-from handlers.auth import AuthenficationHandler 
 from handlers import HandlerRegistery
+from handlers.auth import AuthenficationHandler
 from handlers.authorization import AuthorizationHandler
 from handlers.country import CountryHandler
-
 from services import AuthentificationService, AuthorizationService
 
 request = {
@@ -22,4 +21,6 @@ registery.append(CountryHandler(['Congo','Mali','Senegal']))
 
 
 
-print(registery.run(request))
+res = registery.run(request)
+
+print(res)
