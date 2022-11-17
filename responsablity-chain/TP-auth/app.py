@@ -1,25 +1,25 @@
-from handlers.auth import AuthenficationHandler
+from handlers.auth import AuthenficationHandler 
+from handlers import HandlerRegistery
 from handlers.authorization import AuthorizationHandler
+from handlers.country import CountryHandler
 
 from services import AuthentificationService, AuthorizationService
 
 request = {
     'sender': 'www.congo-info.cg',
-    'authorization':'read'
+    'authorization':'read',
+    'country':'Congo'
 }
 
 auth_data = ['www.congo-info.cg','www.rfi-france.fr','www.france-24.fr']
 autho_data = ['read','delete','create']
 
+registery = HandlerRegistery()
 
-head = AuthenficationHandler(AuthentificationService(auth_data))
+registery.append(AuthenficationHandler(AuthentificationService(auth_data)))
+registery.append(AuthorizationHandler(AuthorizationService(autho_data)))
+registery.append(CountryHandler(['Congo','Mali','Senegal']))
 
-current = head 
 
-current.next = AuthorizationHandler(AuthorizationService(autho_data))
 
-current = current.next 
-
-res = head.execute_next(request)
-
-print(res)
+print(registery.run(request))

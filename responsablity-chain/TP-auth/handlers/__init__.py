@@ -33,5 +33,28 @@ class HandlerWithAuthorizationService(Handler):
         self.service: AuthorizationService = service
 
 
+class HandlerRegistery:
 
+    def __init__(self):
+
+        self.head: Handler = None  
+        self.current = self.head
+
+    def append(self, handler:Handler):
+        if self.head is None:
+            self.head = handler
+            self.current = self.head
+           
+        else:
+            self.current.next = handler
+            self.current = handler
+
+        return self.current
+
+    def run(self, request):
+
+        if self.head is None:
+            return None 
+
+        return self.head.execute_next(request)
 
